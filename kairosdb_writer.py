@@ -378,12 +378,11 @@ class KairosdbWriter:
         i = 0
         for value in values:
             ds_name = types_list[i][0]
-            new_name = "%s.%s" % (name, ds_name)
             new_value = value
-            collectd.debug("metric new_name= %s" % new_name)
+            collectd.debug("metric name= %s" % name)
 
             if new_value is not None:
-                line = 'put %s %d %f %s' % (new_name, timestamp, new_value, tag_string)
+                line = 'put %s %d %f %s' % (name, timestamp, new_value, tag_string)
                 collectd.debug(line)
                 lines.append(line)
 
@@ -398,16 +397,15 @@ class KairosdbWriter:
         i = 0
         for value in values:
             ds_name = types_list[i][0]
-            new_name = "%s.%s" % (name, ds_name)
             new_value = value
-            collectd.debug("metric new_name= %s" % new_name)
+            collectd.debug("metric name= %s" % name)
 
             if new_value is not None:
                 if i > 0:
                     json += ','
 
                 json += '{'
-                json += '"name":"%s",' % new_name
+                json += '"name":"%s",' % name
                 json += '"datapoints":[[%d, %f]],' % (time_in_seconds, new_value)
                 json += '"tags": {'
 
